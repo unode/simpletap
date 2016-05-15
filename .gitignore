@@ -1,0 +1,8 @@
+# Setup (automatic creation)
+MANIFEST
+build/
+dist/
+simpletap.egg-info/
+
+# Testing files
+.tox/
