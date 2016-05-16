@@ -99,7 +99,7 @@ https://opensource.org/licenses/MIT
 
 from .result import TAPTestResult
 from .runner import TAPTestRunner
-from .version import __version__
+from .version import __version__  # noqa
 
 
 __all__ = ['TAPTestResult', 'TAPTestRunner']
