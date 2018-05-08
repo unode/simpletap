@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # update-version.sh -- created 2016-05-16, Renato Alves
 # @Last Change: 2016-05-16.
 # @Revision:    0.1
