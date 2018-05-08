@@ -119,3 +119,4 @@ Projects
 ``simpletap`` is currently being used by:
 
 - `taskwarrior <https://github.com/taskwarrior/task/>`__
+- `firefox_decrypt <https://github.com/unode/firefox_decrypt/>`__
