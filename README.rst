@@ -109,8 +109,8 @@ The test suite is configured to run via `tox <http://tox.readthedocs.io/>`__.
 
 Status:
 
-.. image:: https://travis-ci.org/Unode/simpletap.svg?branch=master
-    :target: https://travis-ci.org/Unode/simpletap
+.. image:: https://travis-ci.org/unode/simpletap.svg?branch=master
+    :target: https://travis-ci.org/unode/simpletap
 
 
 Projects
