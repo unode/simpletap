@@ -236,6 +236,7 @@ class TestAPI(unittest.TestCase):
         self.assertNotIn("# EXPECTED_FAILURE:", text)
         self.assertNotIn("# SKIP:", text)
 
+
 if __name__ == "__main__":
     from simpletap import TAPTestRunner
     unittest.main(testRunner=TAPTestRunner())

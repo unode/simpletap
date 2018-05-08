@@ -31,7 +31,7 @@ class _Outcome(object):
             yield
         except KeyboardInterrupt:
             raise
-        except:
+        except Exception:
             exc_info = sys.exc_info()
 
             if self.expecting_failure:
