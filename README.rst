@@ -1,8 +1,12 @@
+
 SimpleTAP
 =========
 
 ``simpletap`` is a test runner that integrates with the unittest framework to
 produce `TAP (Test Anything Protocol) <https://en.wikipedia.org/wiki/Test_Anything_Protocol>`__ compatible output.
+
+.. image:: https://github.com/unode/simpletap/actions/workflows/main.yml/badge.svg
+    :target: https://github.com/unode/simpletap/actions/
 
 Usage
 -----
@@ -100,11 +104,6 @@ Testing
 -------
 
 The test suite is configured to run via `tox <http://tox.readthedocs.io/>`__.
-
-Status:
-
-.. image:: https://travis-ci.org/unode/simpletap.svg?branch=master
-    :target: https://travis-ci.org/unode/simpletap
 
 
 Projects
