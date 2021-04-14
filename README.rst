@@ -5,7 +5,7 @@ SimpleTAP
 ``simpletap`` is a test runner that integrates with the unittest framework to
 produce `TAP (Test Anything Protocol) <https://en.wikipedia.org/wiki/Test_Anything_Protocol>`__ compatible output.
 
-.. image:: https://github.com/unode/simpletap/actions/workflows/main.yml/badge.svg
+.. image:: https://github.com/unode/simpletap/actions/workflows/main.yaml/badge.svg
     :target: https://github.com/unode/simpletap/actions/
 
 Usage
