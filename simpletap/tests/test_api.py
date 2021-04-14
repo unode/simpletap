@@ -1,12 +1,7 @@
 import re
 import unittest
 import simpletap
-
-try:
-    from cStringIO import StringIO
-except ImportError:
-    # Python 3
-    from io import StringIO
+from io import StringIO
 
 
 class TestAPI(unittest.TestCase):
@@ -16,7 +11,7 @@ class TestAPI(unittest.TestCase):
                 """A test with errors"""
 
                 0 / 0
-                lambda: "something_extra"
+                print("something_extra")
 
         result = simpletap.TAPTestResult(StringIO())
         test = TestableTest("test_error")
@@ -49,7 +44,7 @@ class TestAPI(unittest.TestCase):
                 """A failed test"""
 
                 self.assertFalse("This test will fail")
-                lambda: "something_extra"
+                print("something_extra")
 
         result = simpletap.TAPTestResult(StringIO())
         test = TestableTest("test_fail")
@@ -83,7 +78,7 @@ class TestAPI(unittest.TestCase):
                 """Expected fail test"""
 
                 self.assertFalse("This test is expected to fail")
-                lambda: "something_extra"
+                print("something_extra")
 
         result = simpletap.TAPTestResult(StringIO())
         test = TestableTest("test_expected_fail")
@@ -93,7 +88,7 @@ class TestAPI(unittest.TestCase):
         text = result.stream.read()
 
         self.assertRegexpMatches(text, "^{} 1 - ".format(
-            re.escape(simpletap.result._color("skip", "yellow"))))
+            re.escape(simpletap.result._color("ok", "yellow"))))
 
         self.assertIn("# EXPECTED_FAILURE:", text)
         self.assertIn("Expected fail test", text)
@@ -150,7 +145,7 @@ class TestAPI(unittest.TestCase):
                 """This test will be skipped"""
 
                 self.assertTrue("This will not be seen")
-                lambda: "something_extra"
+                print("something_extra")
 
         result = simpletap.TAPTestResult(StringIO())
         test = TestableTest("test_skip")
@@ -160,7 +155,7 @@ class TestAPI(unittest.TestCase):
         text = result.stream.read()
 
         self.assertRegexpMatches(text, "^{} 1 - ".format(
-            re.escape(simpletap.result._color("skip", "yellow"))))
+            re.escape(simpletap.result._color("ok", "yellow"))))
 
         self.assertIn("# SKIP:", text)
         self.assertIn("This test will be skipped", text)
@@ -185,7 +180,7 @@ class TestAPI(unittest.TestCase):
                 """This will be a success"""
 
                 self.assertTrue("This test will pass")
-                lambda: "something_extra"
+                print("something_extra")
 
         result = simpletap.TAPTestResult(StringIO())
         test = TestableTest("test_success")
@@ -213,7 +208,7 @@ class TestAPI(unittest.TestCase):
         class TestableTest(unittest.TestCase):
             def test_success_no_doc(self):
                 self.assertTrue("This test will pass")
-                lambda: "something_extra"
+                print("something_extra")
 
         result = simpletap.TAPTestResult(StringIO())
         test = TestableTest("test_success_no_doc")
@@ -241,7 +236,7 @@ class TestAPI(unittest.TestCase):
         class TestableTest(unittest.TestCase):
             def test_fail_no_doc(self):
                 self.assertFalse("This test will fail")
-                lambda: "something_extra"
+                print("something_extra")
 
         result = simpletap.TAPTestResult(StringIO())
         test = TestableTest("test_fail_no_doc")
@@ -272,6 +267,6 @@ class TestAPI(unittest.TestCase):
 
 if __name__ == "__main__":
     from simpletap import TAPTestRunner
-    unittest.main(testRunner=TAPTestRunner())
+    unittest.main(testRunner=TAPTestRunner(buffer=True))
 
 # vim: ai sts=4 et sw=4 ft=python
