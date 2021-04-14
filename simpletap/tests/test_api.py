@@ -110,6 +110,39 @@ class TestAPI(unittest.TestCase):
         self.assertNotIn("# FAIL:", text)
         self.assertNotIn("# SKIP:", text)
 
+    def test_unexpected_success(self):
+        class TestableTest(unittest.TestCase):
+            @unittest.expectedFailure
+            def test_unexpected_success(self):
+                """Unexpected success test"""
+
+                self.assertTrue("This test is not expected to fail")
+                print("something_extra")
+
+        result = simpletap.TAPTestResult(StringIO())
+        test = TestableTest("test_unexpected_success")
+        test.run(result)
+
+        result.stream.seek(0)
+        text = result.stream.read()
+
+        self.assertRegexpMatches(text, "^{} 1 - ".format(
+            re.escape(simpletap.result._color("not ok", "yellow"))))
+
+        self.assertIn("# UNEXPECTED_SUCCESS:", text)
+        self.assertIn("Unexpected success test", text)
+        self.assertIn("test_unexpected_success", text)
+
+        self.assertNotIn("something_extra", text)
+        self.assertNotIn("AssertionError on file", text)
+        self.assertNotIn('self.assertTrue("This test is not expected to fail")', text)
+
+        # If no docstring is defined
+        self.assertNotIn("test_expected_fail (TestableTest)", text)
+        self.assertNotIn("# ERROR:", text)
+        self.assertNotIn("# FAIL:", text)
+        self.assertNotIn("# SKIP:", text)
+
     def test_skip(self):
         class TestableTest(unittest.TestCase):
             @unittest.skipIf(True, "Skipping test for a reason")
