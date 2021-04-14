@@ -121,7 +121,7 @@ Changelog
 2.0.0
 ^^^^^
 
-- `skip` keyword is no longer used. Now fully compliant with `TAP <https://en.wikipedia.org/wiki/Test_Anything_Protocol>`__ using `ok`/`not ok`
-- `SKIP` now results in `ok`
-- `EXPECTED_FAILURE` now results in `ok`
-- `UNEXPECTED_SUCCESS` is now explicitly handled and results in `not ok`
+- ``skip`` keyword is no longer used. Now fully compliant with `TAP <https://en.wikipedia.org/wiki/Test_Anything_Protocol>`__ using ``ok``/``not ok``
+- ``SKIP`` now results in ``ok``
+- ``EXPECTED_FAILURE`` now results in ``ok``
+- ``UNEXPECTED_SUCCESS`` is now explicitly handled and results in ``not ok``
