@@ -2,11 +2,7 @@ SimpleTAP
 =========
 
 ``simpletap`` is a test runner that integrates with the unittest framework to
-produce TAP (Test Anything Protocol) compatible output.
-
-| ``simpletap`` has been extensively tested under Python 2.7 and is considered production ready.
-| Python 3.4-3.5 is also supported but has not seen as much testing.
-
+produce `TAP (Test Anything Protocol) <https://en.wikipedia.org/wiki/Test_Anything_Protocol>`__ compatible output.
 
 Usage
 -----
@@ -24,7 +20,7 @@ use:
 
     if __name__ == "__main__":
         from simpletap import TAPTestRunner
-        unittest.main(testRunner=TAPTestRunner())
+        unittest.main(testRunner=TAPTestRunner(buffer=True))
 
 
 A small test case like:
@@ -53,6 +49,11 @@ A small test case like:
             "we saw this coming"
             self.assertEqual(0, 1)
 
+        @unittest.expectedFailure
+        def testUnexpectFail(self):
+            "someone fixed it already"
+            self.assertEqual(0, 0)
+
         @unittest.skipIf(True, "Skipping this one")
         def testSkip(self):
             "pending a fix"
@@ -64,43 +65,36 @@ A small test case like:
 
     if __name__ == "__main__":
         from simpletap import TAPTestRunner
-        unittest.main(testRunner=TAPTestRunner())
+        unittest.main(testRunner=TAPTestRunner(buffer=True))
 
 When saved in a file called ``test.py`` and executed would produce:
 
 .. code:: TAP
 
-    1..6
+    1..7
     ok 1 - test.py: test adding values
     not ok 2 - test.py: oops something went wrong
-    # ERROR: NameError on file test.py line 30 in testError: 'no_such_variable + 1  # Oops!':
-    #        global name 'no_such_variable' is not defined
-    skip 3 - test.py: we saw this coming
-    # EXPECTED_FAILURE: AssertionError on file test.py line 21 in testExpectFail: 'self.assertEqual(0, 1)':
+    # ERROR: NameError on file test.py line 38 in testError: 'no_such_variable + 1  # Oops!':
+    #        name 'no_such_variable' is not defined
+    ok 3 - test.py: we saw this coming # TODO
+    # EXPECTED_FAILURE: AssertionError on file test.py line 24 in testExpectFail: 'self.assertEqual(0, 1)':
     #                   0 != 1
     not ok 4 - test.py: a failing test
-    # FAIL: AssertionError on file test.py line 16 in testFail: 'self.assertEqual(0, 1)':
+    # FAIL: AssertionError on file test.py line 19 in testFail: 'self.assertEqual(0, 1)':
     #       0 != 1
     ok 5 - test.py: test multiplying values
-    skip 6 - test.py: pending a fix
+    ok 6 - test.py: pending a fix # skip
     # SKIP:
     #       Skipping this one
-
+    not ok 7 - test.py: someone fixed it already # FIXED
+    # UNEXPECTED_SUCCESS:
+    #                     testUnexpectFail (__main__.IntegerArithmeticTestCase)
 
 You can also launch ``simpletap`` directly from the command line in much the same way you do with unittest:
 
 .. code::
 
     python -m simpletap test.IntegerArithmeticTestCase
-
-Deviations from standard
-------------------------
-
-The specification of Test Anything Protocol treats skipped tests as ``ok``.
-
-During the use of this module it was found to be more useful to treat these, as
-well as expected failures as extensions to the specification under the keyword ``skip``.
-
 
 Testing
 -------
@@ -120,3 +114,15 @@ Projects
 
 - `taskwarrior <https://github.com/taskwarrior/task/>`__
 - `firefox_decrypt <https://github.com/unode/firefox_decrypt/>`__
+
+
+Changelog
+---------
+
+2.0.0
+^^^^^
+
+- `skip` keyword is no longer used. Now fully compliant with `TAP <https://en.wikipedia.org/wiki/Test_Anything_Protocol>`__ using `ok`/`not ok`
+- `SKIP` now results in `ok`
+- `EXPECTED_FAILURE` now results in `ok`
+- `UNEXPECTED_SUCCESS` is now explicitly handled and results in `not ok`
