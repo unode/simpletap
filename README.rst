@@ -26,6 +26,13 @@ use:
         from simpletap import TAPTestRunner
         unittest.main(testRunner=TAPTestRunner(buffer=True))
 
+or if you don't want failures to exit with a non-zero exitcode:
+
+.. code:: python
+
+    if __name__ == "__main__":
+        from simpletap import TAPTestRunner
+        unittest.main(testRunner=TAPTestRunner(buffer=True), exit=False)
 
 A small test case like:
 
